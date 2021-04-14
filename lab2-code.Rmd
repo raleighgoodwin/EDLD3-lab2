@@ -10,6 +10,7 @@ library(tidyverse)
 library(repurrrsive)
 ```
 
+# A
 
 ```{r}
 file <- "https://github.com/datalorax/esvis/raw/master/data/benchmarks.rda"
@@ -21,5 +22,53 @@ benchmarks <- benchmarks %>%
 	mutate(wave = case_when(season == "Fall" ~ 0,
 	                        season == "Winter" ~ 1,
 	                        TRUE ~ 2))
+```
+
+# 1
+
+```{r}
+
+```
+
+# 2
+
+```{r}
+
+```
+
+
+# B
+
+# 1
+
+```{r}
+
+```
+
+# 2
+
+```{r}
+
+```
+
+
+# C
+
+# 1
+
+```{r}
+
+```
+
+# 2
+
+```{r}
+
+```
+
+# 3 (bonus)
+
+```{r}
+
 ```
 
