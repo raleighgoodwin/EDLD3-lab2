@@ -1,5 +1,5 @@
 ---
-title: "EDLD 653 Lab 3"
+title: "EDLD 653 Lab 2"
 author: "Raleigh Goodwin"
 date: "4/14/2021"
 output: html_document
@@ -42,6 +42,31 @@ benchmarks <- benchmarks %>%
 # 1
 
 ```{r}
+sw_films %>% 
+  str()
+
+films <- 1:7
+chars <- rep(NA, 7)
+
+for(i in films){
+  chars[i] <- as.list(sw_films[[i]]$characters) %>% 
+    length()
+}
+
+titles <- rep(NA, 7)
+
+for(i in films){
+  titles[i] <- sw_films[[i]]$title
+}
+
+ans <- rep(NA, 7) %>% 
+  as.list()
+
+for(i in films){
+  ans[i] <- paste0(titles[i], ": ", chars[i]) 
+}
+
+ans
 
 ```
 
