@@ -42,42 +42,25 @@ benchmarks <- benchmarks %>%
 # 1
 
 ```{r}
-sw_films %>% 
-  str()
+# sw_films %>% 
+#   str()
 
-sw_films %>% 
-  length()
+swf <- 1:length(sw_films)
+films <- data.frame(matrix(ncol=2,nrow=length(sw_films), dimnames=list(NULL, c("title", "characters"))))
 
-films <- 1:length(sw_films)
-chars <- rep(NA, length(sw_films))
-
-for(i in films){
-  chars[i] <- as.list(sw_films[[i]]$characters) %>% 
+for(i in swf){
+  films$title[i] <- sw_films[[i]]$title
+  films$characters[i] <- as.list(sw_films[[i]]$characters) %>% 
     length()
 }
-
-titles <- rep(NA, length(sw_films))
-
-for(i in films){
-  titles[i] <- sw_films[[i]]$title
-}
-
-ans <- rep(NA, length(sw_films)) %>% 
-  as.list()
-
-for(i in films){
-  ans[i] <- paste0(titles[i], ": ", chars[i]) 
-}
-
-ans
 
 ```
 
 # 2
 
 ```{r}
-sw_species %>% 
-  length()
+# sw_species %>% 
+#   length()
 
 # sw_species[[2]]$hair_colors
 # sw_species[[2]]$name
