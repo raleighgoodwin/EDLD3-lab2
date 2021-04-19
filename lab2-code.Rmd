@@ -45,21 +45,24 @@ benchmarks <- benchmarks %>%
 sw_films %>% 
   str()
 
-films <- 1:7
-chars <- rep(NA, 7)
+sw_films %>% 
+  length()
+
+films <- 1:length(sw_films)
+chars <- rep(NA, length(sw_films))
 
 for(i in films){
   chars[i] <- as.list(sw_films[[i]]$characters) %>% 
     length()
 }
 
-titles <- rep(NA, 7)
+titles <- rep(NA, length(sw_films))
 
 for(i in films){
   titles[i] <- sw_films[[i]]$title
 }
 
-ans <- rep(NA, 7) %>% 
+ans <- rep(NA, length(sw_films)) %>% 
   as.list()
 
 for(i in films){
@@ -73,6 +76,23 @@ ans
 # 2
 
 ```{r}
+sw_species %>% 
+  length()
+
+# sw_species[[2]]$hair_colors
+# sw_species[[2]]$name
+
+spec <- 1:length(sw_species)
+hair <- data.frame(matrix(ncol=2,nrow=length(sw_species), dimnames=list(NULL, c("name", "color"))))
+
+
+for(i in spec){
+  hair$name[i] <- sw_species[[i]]$name
+  hair$color[i] <- sw_species[[i]]$hair_colors
+}
+
+hair %>%
+  filter(color != "n/a" & color != "none")
 
 ```
 
