@@ -8,6 +8,8 @@ output: html_document
 ```{r}
 library(tidyverse)
 library(repurrrsive)
+library(httr)
+library(purrr)
 ```
 
 # A
@@ -85,6 +87,21 @@ hair %>%
 # 1
 
 ```{r}
+GET("https://pokeapi.co/api/v2/ability/1") %>%
+	content("parsed") 
+
+vctr <- 1:5
+urls <- rep(NA, length(vctr))
+
+for(i in vctr){
+  urls[i] <- paste0("https://pokeapi.co/api/v2/ability/",i)
+}
+
+urlsm <- map(vctr, function(x) paste0("https://pokeapi.co/api/v2/ability/",x))
+
+map(urlsm, function(x) GET(urlsm) %>% content("parsed"))
+
+urlsm[1]
 
 ```
 
