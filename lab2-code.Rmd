@@ -71,12 +71,11 @@ for(i in swf){
 }
 
 #map function for this question
-l2 = map(sw_films, "characters") #alright so I can make map work as well
- map(l2, length) %>% 
-  unlist() %>% 
-  data_frame() %>% 
-  rename(No.characters = names(.)[1]) %>% 
-  tibble::rownames_to_column("filmNo.") %>% 
+film.titles = map(sw_films, "title")
+film.chars = map(sw_films, "characters") %>%  
+ map_dbl(length)
+
+tibble(Film = film.titles, No._Chars = film.chars) %>% 
   knitr::kable()
 
 ```
