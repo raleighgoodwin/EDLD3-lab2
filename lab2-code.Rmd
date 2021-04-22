@@ -10,6 +10,8 @@ library(tidyverse)
 library(repurrrsive)
 library(httr)
 library(purrr)
+library(magrittr)
+
 ```
 
 # A
@@ -26,13 +28,13 @@ benchmarks <- benchmarks %>%
 	                        TRUE ~ 2))
 ```
 
-# 1
+# 1 -- vinita
 
 ```{r}
 
 ```
 
-# 2
+# 2 -- vinita
 
 ```{r}
 
@@ -41,7 +43,7 @@ benchmarks <- benchmarks %>%
 
 # B
 
-# 1
+# 1 -- vinita add how to do with map
 
 ```{r}
 # sw_films %>% 
@@ -58,7 +60,7 @@ for(i in swf){
 
 ```
 
-# 2
+# 2 -- vinita add how to do with map
 
 ```{r}
 # sw_species %>% 
@@ -87,31 +89,46 @@ hair %>%
 # 1
 
 ```{r}
-GET("https://pokeapi.co/api/v2/ability/1") %>%
-	content("parsed") 
+# GET("https://pokeapi.co/api/v2/ability/1") %>%
+# 	content("parsed") 
+# 
+# vctr <- 1:5
+# urls <- rep(NA, length(vctr))
+# 
+# for(i in vctr){
+#   urls[i] <- paste0("https://pokeapi.co/api/v2/ability/",i)
+# }
+# 
+# urlsm <- map(vctr, function(x) paste0("https://pokeapi.co/api/v2/ability/",x))
+# 
+# map(urlsm, function(x) GET(urlsm) %>% content("parsed"))
+# 
+# urlsm[1]
 
-vctr <- 1:5
-urls <- rep(NA, length(vctr))
+pokemon5 <- map(paste0("https://pokeapi.co/api/v2/ability/",1:5), ~GET(.x))
+str(pokemon5)
 
-for(i in vctr){
-  urls[i] <- paste0("https://pokeapi.co/api/v2/ability/",i)
-}
-
-urlsm <- map(vctr, function(x) paste0("https://pokeapi.co/api/v2/ability/",x))
-
-map(urlsm, function(x) GET(urlsm) %>% content("parsed"))
-
-urlsm[1]
-
+pokemon5_abs <- map(pokemon5, ~content(.x,"parsed"))
 ```
 
 # 2
 
 ```{r}
+pokemon5_abs %>% 
+   map_dfr(., extract, c("name"))
+
+str(pokemon5_abs)
+
+pokemon5_abs %>% 
+   map(., extract, c("pokemon")) %>% 
+   map(., ~length(.x$pokemon))
+
+map(pokemon5_abs, "name")
+map(pokemon5_abs, ~length(.x$pokemon))
 
 ```
 
-# 3 (bonus)
+# 3 (bonus) -- vinita
 
 ```{r}
 
