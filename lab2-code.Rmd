@@ -28,22 +28,34 @@ benchmarks <- benchmarks %>%
 	                        TRUE ~ 2))
 ```
 
-# 1 -- vinita
+# 1 
 
 ```{r}
+by_sid = split(benchmarks, benchmarks$sid)
+mods = map(by_sid, ~lm(math ~ wave, data = .x))
+#str(mods)
 
 ```
 
-# 2 -- vinita
+# 2 
 
 ```{r}
-
+coefs <- map(mods, coef)
+slopes <- map_dbl(coefs, 2)
+relation <- tibble(wave = names(slopes),
+                   slope = slopes)
+ggplot(relation, aes(slope)) +
+    geom_histogram(fill = "cornflowerblue",
+                   color = "white") +
+  theme_minimal()+
+  geom_vline(xintercept = mean(slopes, na.rm = T), linetype = "dashed")+
+  geom_text(aes(x=mean(slopes, na.rm = T), label="mean of slopes", y=145), colour="grey", text=element_text(size=3), fontface = "italic")
 ```
 
 
 # B
 
-# 1 -- vinita add how to do with map
+# 1 
 
 ```{r}
 # sw_films %>% 
@@ -58,9 +70,18 @@ for(i in swf){
     length()
 }
 
+#map function for this question
+l2 = map(sw_films, "characters") #alright so I can make map work as well
+ map(l2, length) %>% 
+  unlist() %>% 
+  data_frame() %>% 
+  rename(No.characters = names(.)[1]) %>% 
+  tibble::rownames_to_column("filmNo.") %>% 
+  knitr::kable()
+
 ```
 
-# 2 -- vinita add how to do with map
+# 2 
 
 ```{r}
 # sw_species %>% 
@@ -80,6 +101,17 @@ for(i in spec){
 
 hair %>%
   filter(color != "n/a" & color != "none")
+
+
+#map names and hair color across lists
+map_chr(sw_species, ~.x$hair_colors)
+
+
+sw_species %>%
+  map_dfr(., extract, c("hair_colors", "name")) %>% 
+  filter(!hair_colors %in% c("n/a", "unknown", "none")) %>%  #remove NA, none and unknown values
+  knitr::kable()
+
 
 ```
 
@@ -133,9 +165,14 @@ pokedf
 
 ```
 
-# 3 (bonus) -- vinita
-
+# 3 (bonus) 
 ```{r}
+name.List = map(list1$results, "name") %>% 
+  unlist() %>% 
+  data_frame()
 
+#This introduces a new column
+name.List %>% 
+  rownames_to_column( var = "var_name")
 ```
 
