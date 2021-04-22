@@ -123,8 +123,13 @@ pokemon5_abs %>%
    map(., extract, c("pokemon")) %>% 
    map(., ~length(.x$pokemon))
 
-map(pokemon5_abs, "name")
-map(pokemon5_abs, ~length(.x$pokemon))
+Names <- map_chr(pokemon5_abs, "name")
+Count <- map_int(pokemon5_abs, ~length(.x$pokemon))
+
+# cbind(pokename, pokenum)
+
+pokedf <- tibble(Names, Count)
+pokedf
 
 ```
 
